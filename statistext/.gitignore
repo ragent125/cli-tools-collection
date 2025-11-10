@@ -1,0 +1,15 @@
+# Exécutables
+statistext
+*.exe
+*.out
+
+# Fichiers objets
+*.o
+*.a
+
+# Fichiers temporaires
+*~
+.DS_Store
+
+# Libérable plus tard
+README.md

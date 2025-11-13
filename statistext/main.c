@@ -158,7 +158,9 @@ int main(int argc, char *argv[]) {
     printf("%-20s %s\n", "|--------------------", "|----------");
 
     for (int i = 0; i < tab_used; i++) {
-        printf("|%-20s | %d\n", tab[i].word, tab[i].occurrence);
+        if(tab[i].occurrence >= 1) {
+            printf("|%-20s | %d\n", tab[i].word, tab[i].occurrence);
+        }      
     }
 
     printf("\n==================================================\n");

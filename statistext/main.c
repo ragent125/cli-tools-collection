@@ -117,12 +117,20 @@ int main(int argc, char *argv[]) {
         return 1;
     }
 
-    printf("\nStatistext - Les mots qui comptent !\n");
-    printf("Version 0.3 - Comptage dynamique\n\n");
+    // Vérification si le fichier est vide
+    fseek(fp, 0, SEEK_END);
+    long file_size = ftell(fp);
+    if (file_size == 0) {
+        printf("Erreur : Le fichier '%s' est vide\n", filename);
+        fclose(fp);
+        return 1;
+    }
+    fseek(fp, 0, SEEK_SET);
 
     int tab_size = TAB_SIZE;
     int tab_used = 0;
 
+    // Allocation memoire
     WordOccurrence *tab = malloc(tab_size * sizeof(WordOccurrence));
     if (tab == NULL) {
         printf("Erreur : mémoire insuffisante\n");
@@ -136,6 +144,12 @@ int main(int argc, char *argv[]) {
         extract_words(buffer, &tab, &tab_size, &tab_used);
     }
     fclose(fp);
+
+    if (tab_used == 0) {
+        printf("Erreur : Aucun mot trouvé dans le fichier '%s'\n", filename);
+        free(tab);
+        return 1;
+    }
 
     // Tri par insertion (à la main)
     for (int i = 1; i < tab_used; i++) {
@@ -151,6 +165,8 @@ int main(int argc, char *argv[]) {
     }
 
     // Affichage des résultats
+    printf("\nStatistext - Les mots qui comptent !\n");
+    printf("Version 1.0\n\n");
     printf("Analyse du fichier : %s\n", filename);
     printf("==================================================\n\n");
 
@@ -164,7 +180,7 @@ int main(int argc, char *argv[]) {
     }
 
     printf("\n==================================================\n");
-    printf("Analyse terminée.\n");
+    printf("Nombre de mots = %d\n", tab_used);
 
     free(tab);
     

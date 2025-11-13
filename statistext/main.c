@@ -137,6 +137,19 @@ int main(int argc, char *argv[]) {
     }
     fclose(fp);
 
+    // Tri par insertion (à la main)
+    for (int i = 1; i < tab_used; i++) {
+        WordOccurrence selected = tab[i];
+        int j = i - 1;
+
+        // Compare par occurrence décroissante, puis compare par mot croissant
+        while (j >= 0 && (tab[j].occurrence < selected.occurrence || (tab[j].occurrence == selected.occurrence && strcmp(tab[j].word, selected.word) > 0))) {
+            tab[j + 1] = tab[j];
+            j--;
+        }
+        tab[j + 1] = selected;
+    }
+
     // Affichage des résultats
     printf("Analyse du fichier : %s\n", filename);
     printf("==================================================\n\n");
